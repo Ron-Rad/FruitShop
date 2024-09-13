@@ -74,17 +74,23 @@ function checkOut() {
 
 // Main program loop
 
+// Main program loop
+
 displayProducts();
 console.log("Enter the product number and count to add to your cart, or 'done' to finish:");
 while (true) {
-  let input = prompt("Enter the product number and count (e.g. '1 2' for 2 apples) to add to your cart, or 'done' to finish: ");
+  let input = prompt("Enter the product number and count (e.g. '1 2' for 2 apples) , please put space between the item and quantity/count, to add to your cart, or 'done' to finish: ");
   console.log(`You entered: ${input}`);
-  if (input === 'done') {
+  if (input.toLowerCase() === 'done') {
     break;
   }
   let parts = input.split(' ');
   let productIndex = parseInt(parts[0]) - 1;
   let count = parseInt(parts[1]);
+  if (isNaN(count) || count <= 0) {
+    console.log("Error: Please enter a valid count. Choose from choices provided");
+    continue;
+  }
   addToCart(productIndex, count);
   console.log("Your cart:");
   viewCart();
@@ -94,9 +100,10 @@ console.log("Here are your choices:");
 console.log("1. Remove from cart");
 console.log("2. View cart");
 console.log("3. Checkout");
- while (true) {
-  let choice = prompt("Type in your choice not the number (eg. remove , view or checkout) ");
+while (true) {
+  let choice = prompt("Type in your choice (e.g. remove, view, or checkout) ");
   console.log(`You entered: ${choice}`);
+  choice = choice.toLowerCase();
   if (choice === 'remove') {
     console.log("Enter the item number to remove:");
     let removeIndex = parseInt(prompt("Item number: ")) - 1;
@@ -107,5 +114,7 @@ console.log("3. Checkout");
   } else if (choice === 'checkout') {
     checkOut();
     break;
+  } else {
+    console.log("Error: Invalid choice. Please try again.");
   }
 }
